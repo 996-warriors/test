@@ -1,0 +1,62 @@
+<%@ page language="java" contentType="text/html; charset=GB18030"
+    pageEncoding="GB18030"%>
+<!DOCTYPE html>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="productList.Product" %>
+
+<html>
+<head>
+<meta charset="GB18030">
+<title>商品列表</title>
+</head>
+<body>
+  <table align = "center" width = "450" border="1">
+   <tr>
+     <td align="center" colspan="7">
+       <h4>商品列表如下</h4>
+     </td>
+   </tr>
+   <tr align="center">
+     <td><b>ID</b></td>
+     <td><b>名称</b></td>
+     <td><b>类别</b></td>
+     <td><b>数量</b></td>
+     <td><b>描述</b></td>    
+     <td><b>修改</b></td>
+     <td><b>删除</b></td>
+   </tr>
+   
+     <%
+       //获取商品集合
+       List<Product> list = (List<Product>)request.getAttribute("list");
+       //判断集合是否有效
+       if(list == null||list.size()<1){
+    	   out.print("没有数据！");
+       }else{
+    	   //遍历商品集合中的数据
+    	   for(Product product:list){
+     %>
+         <tr align = "center">
+           <td><%=product.getID() %></td>
+           <td><%=product.getName() %></td>
+           <td><%=product.getType() %></td>
+           <td><%=product.getNumber() %></td>
+           <td><%=product.getDescrption() %></td>
+           <td>
+             
+           </td>
+              <form action = "updata.jsp?id=<%=product.getID()%>" method="post" onsubmit="return check(this);">
+               <input type = "submit" value="修改">
+             </form>
+           <td>
+             <a href ="DeleteServlet?ID=<%=product.getID()%>">删除</a>
+           </td>
+         </tr>
+      <% 
+    	   }
+       }
+     %>
+  </table>
+</body>
+</html>
